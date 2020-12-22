@@ -8,11 +8,13 @@ const Schema = mongoose.Schema
 
 const productSchema = new Schema({
     title: String,
-    categories: [{
+    category: {
         type: String,
-    }],
+        required: true
+    },
     imageURL: {
         type: String,
+        required: true,
         required: true
     },
     price: {
