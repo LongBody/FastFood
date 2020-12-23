@@ -3,40 +3,22 @@ const productModel = require('./modal')
 
 
 const handler = {
-    async findMany(req, res, next) {
+    async getAllProduct(req, res, next) {
         try {
-            let { pageIndex, pageSize, sortBy, sort, search = '', field = '' } = req.query
-            console.log(search)
 
-            pageSize = parseInt(pageSize)
-            pageIndex = parseInt(pageIndex)
+            let items = await productModel.find({})
+            res.json(items)
+        } catch (error) {
+            next(error)
+        }
 
-            let limit = pageSize
-            let skip = (pageIndex - 1) * pageSize
-            let sortInfo = `${sort == 'desc' ? '-' : ''}${sortBy}`
+    },
 
-            console.log(sortInfo)
-                // let fieldsArr = field.split(',').map(field => field.trim())
-
-            if (pageIndex && search) {
-                let items = await productModel.find({ categories: search }).skip(skip).limit(limit)
-                res.json(items)
-            } else if (search) {
-                let items = await productModel.find({
-                    categories: search
-                })
-                res.json(items)
-
-            } else if (pageIndex) {
-                let items = await productModel.find({}).skip(skip).limit(limit).sort(sortInfo)
-                res.json(items)
-            } else {
-                let items = await productModel.find({}).sort(sortInfo)
-                res.json(items)
-            }
-
-            // let items = await productModel.find(condition,fieldsArr).skip(skip).limit(limit)
-            // let items = await productModel.find({})
+    async getProductByCategory(req, res, next) {
+        try {
+            let { name } = req.query
+            let items = await productModel.find({ 'category': name })
+            res.json(items)
         } catch (error) {
             next(error)
         }

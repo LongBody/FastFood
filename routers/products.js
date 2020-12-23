@@ -1,9 +1,11 @@
 const express = require('express')
-const productHandlers = require('../modules/list-music')
+const productHandlers = require('../modules/product')
 
 const productRouter = new express.Router()
 
-productRouter.get('/', productHandlers.findMany)
+productRouter.get('/', productHandlers.getAllProduct)
+
+productRouter.get('/category', productHandlers.getProductByCategory)
 
 productRouter.get('/find', productHandlers.search)
 

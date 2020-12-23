@@ -21,6 +21,7 @@ const productSchema = new Schema({
         type: Number,
         required: true
     },
+    isExist: Boolean
 
 })
 
